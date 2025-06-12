@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Empréstimo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .result.approved {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .result.denied {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Previsão de Aprovação de Empréstimo</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label>Sexo:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="Male" required> Masculino</label>
+                    <label><input type="radio" name="gender" value="Female"> Feminino</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="married">Casado(a)?:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="married" value="Yes" required> Sim</label>
+                    <label><input type="radio" name="married" value="No"> Não</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dependents">Número de Dependentes:</label>
+                <select id="dependents" name="dependents" required>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3 (ou 3+)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="education">Educação:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="education" value="Graduate" required> Graduado(a)</label>
+                    <label><input type="radio" name="education" value="Not Graduate"> Não Graduado(a)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="self_employed">Autônomo(a)?:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="self_employed" value="Yes" required> Sim</label>
+                    <label><input type="radio" name="self_employed" value="No"> Não</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="applicant_income">Rendimento do Requerente (USD):</label>
+                <input type="number" id="applicant_income" name="applicant_income" required min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="loan_amount">Valor do Empréstimo (USD):</label>
+                <input type="number" id="loan_amount" name="loan_amount" required min="0">
+            </div>
+
+            <button type="submit">Prever Aprovação</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result {{ 'approved' if 'Aprovado' in prediction_text else 'denied' }}">
+                {{ prediction_text }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
