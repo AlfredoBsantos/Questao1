@@ -109,9 +109,15 @@ Certifique-se de ter o [Anaconda](https://www.anaconda.com/products/individual) 
     * Abra seu navegador web e acesse `http://127.0.0.1:5000`.
     * Preencha o formulário com os dados do requerente do empréstimo e clique em "Prever Aprovação".
 
+## Demonstração em Vídeo
+
+Assista à demonstração em vídeo deste projeto em: [https://www.youtube.com/watch?v=fB9H-jL9uug](https://www.youtube.com/watch?v=fB9H-jL9uug)
+
 ## Contato
 
 Para dúvidas ou sugestões, por favor, entre em contato.
+
+
 
 
 
